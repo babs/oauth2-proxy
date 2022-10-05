@@ -98,6 +98,20 @@ func (p *KeycloakProvider) EnrichSession(ctx context.Context, s *sessions.Sessio
 	}
 	s.Email = email
 
+	preferred_username, err := json.Get("preferred_username").String()
+	if err == nil {
+		s.PreferredUsername = preferred_username
+	}
+
+	user, err := json.Get("user").String()
+	if err == nil {
+		s.User = user
+	}
+
+	if s.User == "" && s.PreferredUsername != "" {
+		s.User = s.PreferredUsername
+	}
+
 	return nil
 }
 
