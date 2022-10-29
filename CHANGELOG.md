@@ -43,6 +43,7 @@ to remain consistent with CLI flags. You should specify `code_challenge_method` 
 - [#1851](https://github.com/oauth2-proxy/oauth2-proxy/pull/1851) Bump golang to 1.19 and min allowed version to 1.18
 - [#1815](https://github.com/oauth2-proxy/oauth2-proxy/pull/1815) Keycloak: save user and preferredUsername in session to populate headers for the backend (@babs)
 - [#1847](https://github.com/oauth2-proxy/oauth2-proxy/pull/1847) Update go-redis/redis to v9 (@arhamGH)
+- [#1866](https://github.com/oauth2-proxy/oauth2-proxy/pull/1866) Add support for unix socker as upstream (@babs)
 - 
 # V7.3.0
 
