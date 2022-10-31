@@ -18,6 +18,9 @@ type KeycloakOIDCProvider struct {
 // NewKeycloakOIDCProvider makes a KeycloakOIDCProvider using the ProviderData
 func NewKeycloakOIDCProvider(p *ProviderData, opts options.KeycloakOptions) *KeycloakOIDCProvider {
 	p.ProviderName = keycloakOIDCProviderName
+	if opts.BackendLogoutUrl != "" {
+		p.BackendLogoutUrl = opts.BackendLogoutUrl
+	}
 
 	provider := &KeycloakOIDCProvider{
 		OIDCProvider: &OIDCProvider{
