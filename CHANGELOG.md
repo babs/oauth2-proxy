@@ -10,6 +10,7 @@
 
 - [#1876](https://github.com/oauth2-proxy/oauth2-proxy/pull/1876) Add `--backend-logout-url` with `${id_token}` placeholder (@babs)
 - [#1873](https://github.com/oauth2-proxy/oauth2-proxy/pull/1873) Fix empty users with some OIDC providers (@babs)
+- [#1866](https://github.com/oauth2-proxy/oauth2-proxy/pull/1866) Add support for unix socker as upstream (@babs)
 
 # V7.4.0
 
@@ -25,6 +26,7 @@
   - Since the CSRF cookie name is now longer it could potentially break long cookie names (around 1000 characters).
   - Having a unique CSRF cookie per request can lead to quite a number of cookies, in case an application performs a high number of parallel authentication requests. Each call will redirect to /oauth2/start, if the user is not authenticated, and a new cookie will be set. The successfully authenticated requests will have its CSRF cookies immediatly expired, however the failed ones will mantain its CSRF cookies until they expire (by default in 15 minutes).
   - The user may redefine the CSRF cookie expiration time using flag "--cookie-csrf-expire" (e.g. --cookie-csrf-expire=5m). By default, it is 15 minutes, but you can fine tune to your environment.
+
 - [#1574](https://github.com/oauth2-proxy/oauth2-proxy/pull/1574) Add Azure groups support and Azure OAuth v2.0 (@adriananeci)
   - group membership check is now validated while using the the azure provider.
   - Azure OAuth v2.0 (https://login.microsoftonline.com/{tenant_id}/v2.0) is now available along with Azure OAuth v1.0. See https://github.com/oauth2-proxy/oauth2-proxy/blob/master/docs/docs/configuration/auth.md#azure-auth-provider for more details
@@ -44,9 +46,9 @@ N/A
 - [#1669](https://github.com/oauth2-proxy/oauth2-proxy/pull/1699) Fix method deprecated error in lint (@t-katsumura)
 - [#1701](https://github.com/oauth2-proxy/oauth2-proxy/pull/1701) Watch the htpasswd file for changes and update the htpasswdMap (@aiciobanu)
 - [#1709](https://github.com/oauth2-proxy/oauth2-proxy/pull/1709) Show an alert message when basic auth credentials are invalid (@aiciobanu)
-- [#1723](https://github.com/oauth2-proxy/oauth2-proxy/pull/1723) Added ability to specify allowed TLS cipher suites. (@crbednarz)
-- [#1720](https://github.com/oauth2-proxy/oauth2-proxy/pull/1720) Extract roles from authToken, to allow using allowed roles with Keycloak. (@MrDeerly )
-- [#1774](https://github.com/oauth2-proxy/oauth2-proxy/pull/1774) Fix vulnerabilities CVE-2022-27191, CVE-2021-44716 and CVE-2022-29526. (@felipeconti)
+- [#1723](https://github.com/oauth2-proxy/oauth2-proxy/pull/1723) Added ability to specify allowed TLS cipher suites (@crbednarz)
+- [#1720](https://github.com/oauth2-proxy/oauth2-proxy/pull/1720) Extract roles from authToken, to allow using allowed roles with Keycloak (@MrDeerly)
+- [#1774](https://github.com/oauth2-proxy/oauth2-proxy/pull/1774) Fix vulnerabilities CVE-2022-27191, CVE-2021-44716 and CVE-2022-29526 (@felipeconti)
 - [#1667](https://github.com/oauth2-proxy/oauth2-proxy/issues/1667) Rename configuration file flag for PKCE (@ChrisEke)
 to remain consistent with CLI flags. You should specify `code_challenge_method` in your configuration instead of
 `force_code_challenge_method`.
@@ -63,7 +65,7 @@ to remain consistent with CLI flags. You should specify `code_challenge_method` 
 - [#1851](https://github.com/oauth2-proxy/oauth2-proxy/pull/1851) Bump golang to 1.19 and min allowed version to 1.18 (@adriananeci)
 - [#1815](https://github.com/oauth2-proxy/oauth2-proxy/pull/1815) Keycloak: save user and preferredUsername in session to populate headers for the backend (@babs)
 - [#1847](https://github.com/oauth2-proxy/oauth2-proxy/pull/1847) Update go-redis/redis to v9 (@arhamGH)
--
+
 # V7.3.0
 
 ## Release Highlights
