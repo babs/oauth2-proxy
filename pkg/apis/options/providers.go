@@ -138,7 +138,7 @@ type KeycloakOptions struct {
 	Roles []string `json:"roles,omitempty"`
 
 	// URL to call to perform a logout in background
-	BackendLogoutUrl string `json:"backend_logout_url"`
+	BackendLogoutURL string `json:"backend_logout_url"`
 }
 
 type AzureOptions struct {
