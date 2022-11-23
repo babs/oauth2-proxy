@@ -56,6 +56,8 @@ type ProviderData struct {
 	getAuthorizationHeaderFunc func(string) http.Header
 	loginURLParameterDefaults  url.Values
 	loginURLParameterOverrides map[string]*regexp.Regexp
+
+	BackendLogoutURL string
 }
 
 // Data returns the ProviderData
