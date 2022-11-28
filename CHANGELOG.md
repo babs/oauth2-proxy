@@ -8,7 +8,7 @@
 
 ## Changes since v7.4.0
 
-- [#1876](https://github.com/oauth2-proxy/oauth2-proxy/pull/1876) Add `--backend-logout-url` with `${id_token}` placeholder (@babs)
+- [#1876](https://github.com/oauth2-proxy/oauth2-proxy/pull/1876) Add `--backend-logout-url` with `{id_token}` placeholder (@babs)
 
 # V7.4.0
 
