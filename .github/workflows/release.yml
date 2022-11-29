@@ -1,4 +1,4 @@
-name: "tagged-release"
+name: "release-on-tag"
 
 on:
   push:
@@ -6,13 +6,14 @@ on:
       - "v*"
 
 jobs:
-  tagged-release:
-    name: "Tagged Release"
+  binary-release:
+    name: "Binary release"
     runs-on: "ubuntu-latest"
 
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
+
       - uses: actions/setup-go@v3
         with:
           go-version: '>=1.19.0'
@@ -29,3 +30,36 @@ jobs:
           files: |
             release/*.gz
             release/*.txt
+
+  docker-release:
+    name: "Docker release"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Docker Hub cred defined
+        id: docker-stuff
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          echo DOCKER_CREDS_DEFINED=$([ -z "$DOCKERHUB_USERNAME" -o -z "DOCKERHUB_TOKEN" ] && echo n || echo y) >>$GITHUB_ENV
+          echo PROJECT_NAME=${GITHUB_REPOSITORY##*/} >>$GITHUB_OUTPUT
+
+      - name: Set up Docker Buildx
+        if: env.DOCKER_CREDS_DEFINED == 'y'
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Hub
+        if: env.DOCKER_CREDS_DEFINED == 'y'
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        if: env.DOCKER_CREDS_DEFINED == 'y'
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ steps.docker-stuff.outputs.PROJECT_NAME }}:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ steps.docker-stuff.outputs.PROJECT_NAME }}:${{ github.ref_name }}
