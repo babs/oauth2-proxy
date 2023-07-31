@@ -60,6 +60,8 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
+          build-args: |
+            VERSION=${{ github.ref_name }}
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ steps.docker-stuff.outputs.PROJECT_NAME }}:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ steps.docker-stuff.outputs.PROJECT_NAME }}:${{ github.ref_name }}
